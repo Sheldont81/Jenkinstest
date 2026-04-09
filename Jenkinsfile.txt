@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Verify Files') {
+            steps {
+                sh 'ls -la'
+            }
+        }
+
+        stage('Test HTML Exists') {
+            steps {
+                sh 'test -f index.html'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline successful!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
